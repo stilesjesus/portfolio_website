@@ -1,0 +1,149 @@
+---
+title: "24/7 Honey Production Monitoring System"
+description: "Distributed ESP32 mesh network monitoring 3 remote tanks with less than 0.1% packet loss over 2-month deployment"
+date: 2025-06-01
+status: "complete"
+featured: true
+category: "embedded"
+
+tech: ["ESP32", "C++", "ESP-NOW", "IoT"]
+tools: ["Arduino IDE", "PlatformIO", "Grafana", "InfluxDB"]
+
+github: "https://github.com/stilesjesus/honey-monitor"
+
+image: "/assets/projects/honey-monitor/sensorpack.JPG"
+gallery:
+  - "/assets/projects/honey-monitor/sensorpack.JPG"
+  - "/assets/projects/honey-monitor/webserver_siren.JPG"
+  - "/assets/projects/iot-display/webpage_sensor.png"
+
+duration: "3 months"
+team: ["Solo"]
+role: "Hardware Engineering Intern"
+company: "Warcola Honey Farms"
+
+impact: "Enabled real-time production monitoring, preventing $15K+ in potential product loss from tank overflows"
+lessons:
+  - "Wireless reliability in agricultural settings requires redundancy"
+  - "Power optimization is critical for battery-powered field deployments"
+  - "Simple CRC validation can dramatically improve data integrity"
+awards:
+  - "Adopted as permanent infrastructure at Warcola"
+---
+
+## The Challenge
+
+Warcola Honey Farms needed to monitor honey levels in remote storage tanks spread across their facility. Manual checking risked overflow (losing product) or running empty (halting production). They needed 24/7 automated monitoring that could survive harsh outdoor conditions.
+
+## System Requirements
+
+- Monitor 3 tanks up to 500ft apart
+- Survive -20°F to 100°F temperature range  
+- Run 45+ days on battery power
+- Less than 1% data loss acceptable
+- Real-time alerts for critical levels
+
+## Technical Architecture
+
+### Hardware Design
+
+**5-Node ESP32 Mesh Network:**
+- 3x Tank Sensor Nodes (ESP32 + Ultrasonic sensors)
+- 1x Relay Node (Range extension + redundancy)
+- 1x Gateway Node (WiFi bridge to cloud)
+
+**Power System:**
+- 18650 Li-Ion battery packs (3S2P configuration)
+- Solar charging for gateway node
+- Deep sleep optimization: 120-second cycles
+- Current draw: 0.5mA sleep, 80mA active
+
+### Communication Protocol
+
+Implemented custom ESP-NOW protocol with reliability layer:
+
+```cpp
+typedef struct {
+    uint8_t node_id;
+    float tank_level;
+    float battery_voltage;
+    int8_t rssi;
+    uint32_t timestamp;
+    uint8_t crc8;
+} SensorPacket;
+
+// Reliability improvements
+void sendWithRetry(SensorPacket* packet) {
+    for(int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+        if(esp_now_send(gateway_mac, (uint8_t*)packet, sizeof(SensorPacket)) == ESP_OK) {
+            if(waitForAck(packet->node_id, ACK_TIMEOUT)) {
+                return; // Success
+            }
+        }
+        delay(BACKOFF_TIME * (1 << attempt)); // Exponential backoff
+    }
+}
+```
+
+### Critical Bug: The 15% Problem
+
+Initial deployment had 15% packet loss. Through systematic debugging:
+
+1. **Channel Scanning**: WiFi interference on channel 1
+2. **Power Issues**: Voltage drops during transmission
+3. **Timing**: Nodes transmitting simultaneously
+
+**Solution**: 
+- Fixed WiFi channel (6)
+- Added 1000µF capacitors
+- Implemented TDMA-style time slots
+- Custom CRC-8 validation
+
+Result: **Less than 0.1% packet loss** over 2 months
+
+## Field Performance
+
+📊 **2-Month Deployment Stats:**
+- **99.94% Uptime** (45 minutes total downtime)
+- **0.08% Packet Loss** (from 1.2M transmissions)
+- **52 Days Battery Life** (exceeded 45-day requirement)
+- **Zero False Alarms**
+- **2 Overflow Events Prevented**
+
+## Dashboard & Monitoring
+
+Built web dashboard with:
+- Real-time tank levels
+- Historical trending
+- Battery health monitoring
+- SMS/Email alerts for critical events
+- Predictive "time until full/empty"
+
+## Harsh Environment Adaptations
+
+- **Enclosures**: IP67-rated with desiccant packs
+- **Antennas**: External high-gain antennas with lightning protection
+- **Temperature**: Conformal coating on PCBs
+- **Mounting**: Vibration-dampened mounts
+
+## Impact & Adoption
+
+The system was so successful that Warcola:
+- Adopted it as permanent infrastructure
+- Requested expansion to 8 additional tanks
+- Estimated ROI: 3 months from prevented losses
+- Saved 10 hours/week of manual checking
+
+## Technical Deep-Dive
+
+For the full technical documentation including:
+- PCB designs and schematics
+- Complete source code
+- Deployment guide
+- Grafana dashboard templates
+
+Visit the [GitHub Repository](https://github.com/stilesjesus/honey-monitor)
+
+## What I Learned
+
+This project taught me that embedded systems in the real world are 20% writing code and 80% solving environmental challenges. The "perfect" solution in the lab often fails in the field. Iterative testing and robust error handling made the difference between a demo and production-ready infrastructure.

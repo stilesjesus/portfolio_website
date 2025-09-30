@@ -1,0 +1,161 @@
+---
+interface Props {
+  images: {
+    src: string;
+    alt: string;
+    caption?: string;
+  }[];
+  title?: string;
+  className?: string;
+}
+
+const {
+  images,
+  title = "Gallery",
+  className = ""
+} = Astro.props;
+---
+
+<div class={`project-gallery ${className}`}>
+  {title && (
+    <h3 class="gallery-title font-mono">
+      <span class="text-trace">📸</span> {title}
+    </h3>
+  )}
+  
+  <div class="gallery-grid">
+    {images.map(photo => (
+      <figure class="gallery-item">
+        <img 
+          src={`${import.meta.env.BASE_URL}${photo.src}`}
+          alt={photo.alt}
+          loading="lazy"
+          decoding="async"
+          class="gallery-photo"
+        />
+        {photo.caption && (
+          <figcaption class="gallery-caption">
+            {photo.caption}
+          </figcaption>
+        )}
+      </figure>
+    ))}
+  </div>
+</div>
+
+<style>
+  .project-gallery {
+    --spacing: 0.5rem;
+    margin-bottom: calc(var(--spacing) * 8);
+  }
+
+  .gallery-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 calc(var(--spacing) * 4) 0;
+    color: var(--pcb-silk);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: calc(var(--spacing) * 4);
+  }
+
+  .gallery-item {
+    margin: 0;
+    display: grid;
+    gap: calc(var(--spacing) * 2);
+    justify-items: center;
+    background: var(--pcb-surface);
+    border: 1px solid var(--pcb-trace-dim);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .gallery-item:hover {
+    border-color: var(--pcb-trace);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 217, 255, 0.15);
+  }
+
+  .gallery-photo {
+    width: 100%;
+    height: 280px;
+    object-fit: contain;
+    background: var(--pcb-bg);
+    padding: calc(var(--spacing) * 1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  /* Different handling for different image types */
+  .gallery-photo[src*=".png"] {
+    padding: calc(var(--spacing) * 2);
+    height: 300px;
+  }
+
+  .gallery-item:hover .gallery-photo {
+    transform: scale(1.05);
+  }
+
+  .gallery-caption {
+    font-size: 0.75rem;
+    color: var(--pcb-silk-dim);
+    text-align: center;
+    font-family: var(--font-mono);
+    line-height: 1.4;
+    padding: 0 calc(var(--spacing) * 2) calc(var(--spacing) * 2);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 48rem) {
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: calc(var(--spacing) * 3);
+    }
+
+    .gallery-photo {
+      height: 220px;
+    }
+
+    .gallery-photo[src*=".png"] {
+      height: 240px;
+    }
+
+    .gallery-caption {
+      font-size: 0.6875rem;
+    }
+  }
+
+  /* Large screens - more columns */
+  @media (min-width: 80rem) {
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .gallery-photo {
+      height: 320px;
+    }
+
+    .gallery-photo[src*=".png"] {
+      height: 340px;
+    }
+  }
+
+  /* Professional presentation for single images */
+  .gallery-grid:has(.gallery-item:only-child) {
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .gallery-grid:has(.gallery-item:only-child) .gallery-item {
+    max-width: 500px;
+  }
+
+  .gallery-grid:has(.gallery-item:only-child) .gallery-photo {
+    height: 300px;
+  }
+</style>

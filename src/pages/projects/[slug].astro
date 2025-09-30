@@ -1,0 +1,327 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import ProjectCaseStudy from '../../components/ProjectCaseStudy.astro';
+import TagPill from '../../components/TagPill.astro';
+import ProjectGallery from '../../components/ProjectGallery.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+// Get other projects for navigation
+const allProjects = await getCollection('projects');
+const projectIndex = allProjects.findIndex(p => p.slug === project.slug);
+const prevProject = projectIndex > 0 ? allProjects[projectIndex - 1] : null;
+const nextProject = projectIndex < allProjects.length - 1 ? allProjects[projectIndex + 1] : null;
+---
+
+<BaseLayout 
+  title={`${project.data.title} - Jesús Stiles`}
+  description={project.data.description}
+>
+  <!-- Project Header -->
+  <section class="project-header" style="padding: 3rem 0 2rem;">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" style="margin-bottom: 2rem;">
+        <a href={`${import.meta.env.BASE_URL}`} class="text-dim">Home</a>
+        <span class="text-dim" style="margin: 0 0.5rem;">/</span>
+        <a href={`${import.meta.env.BASE_URL}/projects`} class="text-dim">Projects</a>
+        <span class="text-dim" style="margin: 0 0.5rem;">/</span>
+        <span class="text-trace">{project.data.title}</span>
+      </nav>
+      
+      <!-- Title Section -->
+      <div style="max-width: 800px;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+          <span class="font-mono text-dim" style="font-size: 0.875rem; text-transform: uppercase;">
+            <span class={`led led-${project.data.status === 'active' ? 'green' : 'gold'}`}></span>
+            {project.data.status}
+          </span>
+          {project.data.featured && (
+            <span class="tech-chip" style="border-color: var(--pcb-gold); color: var(--pcb-gold);">
+              ⭐ Featured
+            </span>
+          )}
+        </div>
+        
+        <h1 style="margin-bottom: 1.5rem;">{project.data.title}</h1>
+        
+        <p class="text-dim" style="font-size: 1.125rem; line-height: 1.8; margin-bottom: 2.5rem;">
+          {project.data.description}
+        </p>
+        
+        <!-- Meta Information -->
+        <div class="project-meta" style="display: flex; gap: 3rem; flex-wrap: wrap; margin-bottom: 3rem;">
+          {project.data.duration && (
+            <div style="margin-bottom: 1rem;">
+              <span class="font-mono text-dim" style="font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">Duration</span>
+              <p class="font-mono text-trace">{project.data.duration}</p>
+            </div>
+          )}
+          {project.data.role && (
+            <div style="margin-bottom: 1rem;">
+              <span class="font-mono text-dim" style="font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">Role</span>
+              <p class="font-mono text-trace">{project.data.role}</p>
+            </div>
+          )}
+          {project.data.company && (
+            <div style="margin-bottom: 1rem;">
+              <span class="font-mono text-dim" style="font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">Company</span>
+              <p class="font-mono text-gold">{project.data.company}</p>
+            </div>
+          )}
+        </div>
+        
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+          {project.data.github && (
+            <a href={project.data.github} class="btn" target="_blank">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="margin-right: 0.5rem;">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              View Code
+            </a>
+          )}
+          {project.data.demo && (
+            <a href={project.data.demo} class="btn btn-primary" target="_blank">
+              Live Demo →
+            </a>
+          )}
+          {project.data.comingSoon && (
+            <button class="btn btn-disabled" disabled style="cursor: not-allowed; opacity: 0.5;">
+              Coming Soon
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="trace-line"></div>
+  
+  <!-- Tech Stack Section -->
+  <section class="tech-section" style="padding: 3rem 0;">
+    <div class="container">
+      <h3 class="font-mono" style="margin-bottom: 2rem;">
+        <span class="text-trace">$</span> Tech Stack
+      </h3>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        {project.data.tech.map(tech => (
+          <TagPill text={tech} />
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <div class="trace-line"></div>
+  
+  <!-- Project Gallery -->
+  {project.data.gallery && project.data.gallery.length > 0 && (
+    <section class="project-gallery" style="padding: 3rem 0;">
+      <div class="container">
+        <div style="max-width: 1000px; margin: 0 auto;">
+          <ProjectGallery 
+            images={project.data.gallery.map(src => ({
+              src: src,
+              alt: `${project.data.title} - Project Image`,
+              caption: undefined
+            }))}
+            title="Gallery"
+            className="project-gallery"
+          />
+        </div>
+      </div>
+    </section>
+  )}
+  
+  {project.data.gallery && project.data.gallery.length > 0 && (
+    <div class="trace-line"></div>
+  )}
+
+  <!-- Video Section -->
+  {project.data.video && !project.data.comingSoon && (
+    <>
+      <section class="project-video" style="padding: 3rem 0;">
+        <div class="container">
+          <div style="max-width: 800px; margin: 0 auto;">
+            <h3 class="font-mono" style="margin-bottom: 2rem;">
+              <span class="text-trace">▶</span> Video Demo
+            </h3>
+            <div class="video-wrapper">
+              {(() => {
+                const videoUrl = project.data.video;
+                let embedUrl = '';
+
+                // Extract YouTube video ID
+                if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                  const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?\/]+)/);
+                  const videoId = videoIdMatch ? videoIdMatch[1] : '';
+
+                  // Preserve si parameter if present
+                  const siMatch = videoUrl.match(/[?&]si=([^&]+)/);
+                  const siParam = siMatch ? `?si=${siMatch[1]}` : '';
+
+                  embedUrl = `https://www.youtube.com/embed/${videoId}${siParam}`;
+                }
+
+                return (
+                  <iframe
+                    width="560"
+                    height="315"
+                    src={embedUrl}
+                    title="Project Video Demo"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    style="border: 1px solid var(--pcb-trace-dim); border-radius: 8px;"
+                  ></iframe>
+                );
+              })()}
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="trace-line"></div>
+    </>
+  )}
+
+  <!-- Main Content -->
+  <article class="project-content" style="padding: 4rem 0;">
+    <div class="container">
+      <div class="content-wrapper" style="max-width: 850px; margin: 0 auto; padding: 0 2rem;">
+        <Content />
+      </div>
+    </div>
+  </article>
+  
+  <!-- Project Navigation -->
+  <section class="project-nav" style="padding: 3rem 0; border-top: 1px solid var(--pcb-trace-dim);">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+        {prevProject ? (
+          <a href={`${import.meta.env.BASE_URL}/projects/${prevProject.slug}`} class="nav-link" style="text-decoration: none;">
+            <span class="font-mono text-dim" style="font-size: 0.875rem;">← Previous</span>
+            <p class="text-trace" style="margin: 0.5rem 0 0;">{prevProject.data.title}</p>
+          </a>
+        ) : (
+          <div></div>
+        )}
+        
+        <a href={`${import.meta.env.BASE_URL}/projects`} class="btn">
+          All Projects
+        </a>
+        
+        {nextProject ? (
+          <a href={`${import.meta.env.BASE_URL}/projects/${nextProject.slug}`} class="nav-link" style="text-decoration: none; text-align: right;">
+            <span class="font-mono text-dim" style="font-size: 0.875rem;">Next →</span>
+            <p class="text-trace" style="margin: 0.5rem 0 0;">{nextProject.data.title}</p>
+          </a>
+        ) : (
+          <div></div>
+        )}
+      </div>
+    </div>
+  </section>
+  
+  <style>
+    /* Video wrapper for responsive embedding */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      background: var(--pcb-surface);
+      border-radius: 8px;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Project content styling */
+    .project-content h2 {
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--pcb-trace-dim);
+      font-size: 1.5rem;
+    }
+    
+    .project-content h3 {
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+      color: var(--pcb-trace);
+      font-size: 1.25rem;
+    }
+    
+    .project-content ul {
+      margin-bottom: 2rem;
+      padding-left: 2rem;
+    }
+    
+    .project-content li {
+      margin-bottom: 0.75rem;
+      color: var(--pcb-silk-dim);
+      line-height: 1.6;
+    }
+    
+    .project-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin: 3rem 0;
+      border: 1px solid var(--pcb-trace-dim);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .project-content pre {
+      background: var(--pcb-surface);
+      border: 1px solid var(--pcb-trace-dim);
+      border-radius: 8px;
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin: 2rem 0;
+    }
+    
+    .project-content code {
+      font-family: var(--font-mono);
+      background: var(--pcb-surface);
+      color: var(--pcb-trace);
+      padding: 0.25em 0.5em;
+      border-radius: 4px;
+      font-size: 0.875em;
+    }
+    
+    .project-content pre code {
+      background: none;
+      padding: 0;
+    }
+    
+    .project-content p {
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+    
+    .project-meta > div {
+      min-width: 120px;
+    }
+    
+    .nav-link:hover p {
+      color: var(--pcb-gold);
+    }
+  </style>
+</BaseLayout>

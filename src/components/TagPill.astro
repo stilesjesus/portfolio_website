@@ -1,0 +1,43 @@
+---
+interface Props {
+  text: string;
+  variant?: 'default' | 'featured';
+}
+
+const { text, variant = 'default' } = Astro.props;
+---
+
+<span class={`tag-pill tag-pill--${variant}`}>{text}</span>
+
+<style>
+  .tag-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    border: 1px solid var(--pcb-trace-dim);
+    border-radius: 1rem;
+    background: var(--pcb-surface);
+    color: var(--pcb-silk-dim);
+    transition: all 0.2s ease;
+    font-family: var(--font-mono);
+  }
+  
+  .tag-pill:hover {
+    border-color: var(--pcb-trace);
+    color: var(--pcb-silk);
+    transform: translateY(-1px);
+  }
+  
+  .tag-pill--featured {
+    border-color: var(--pcb-gold);
+    color: var(--pcb-gold);
+  }
+  
+  .tag-pill--featured:hover {
+    background: var(--pcb-gold);
+    color: var(--pcb-substrate);
+  }
+</style>

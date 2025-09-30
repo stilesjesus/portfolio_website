@@ -1,0 +1,240 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Resume | Jesús Stiles" 
+  description="Resume and CV for Jesús G. Stiles Amezcua - ECE Engineer specializing in FPGA development, embedded systems, and IoT solutions"
+>
+  <!-- Resume Header -->
+  <section class="resume-header" style="padding: 4rem 0 2rem;">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <!-- Status Indicator -->
+        <p class="font-mono text-trace" style="font-size: 0.875rem; margin-bottom: 1rem;">
+          <span class="led led-green"></span>
+          RESUME.ACCESSIBLE
+        </p>
+        
+        <h1 style="margin-bottom: 1.5rem;">
+          Professional <span class="text-gold">Resume</span>
+        </h1>
+        
+        <p class="text-dim" style="font-size: 1.125rem; line-height: 1.7; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+          ECE Engineer specializing in FPGA development, embedded systems, and IoT solutions. 
+          Download or view my resume to learn more about my experience and skills.
+        </p>
+        
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem;">
+          <a href={`${import.meta.env.BASE_URL}/resume/Jesus_Stiles_Resume.pdf`} class="btn btn-primary" download="Jesus_Stiles_Resume.pdf">
+            📄 Download PDF
+          </a>
+          <a href={`${import.meta.env.BASE_URL}/contact`} class="btn">
+            💬 Let's Chat
+          </a>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="quick-links" style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem;">
+          <a href="https://github.com/stilesjesus" class="font-mono text-trace" style="font-size: 0.875rem; text-decoration: none;" target="_blank">
+            <span class="led led-gold"></span>
+            GITHUB.COM
+          </a>
+          <a href="https://linkedin.com/in/jesus-stiles" class="font-mono text-trace" style="font-size: 0.875rem; text-decoration: none;" target="_blank">
+            <span class="led led-green"></span>  
+            LINKEDIN.COM
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="trace-line"></div>
+  
+  <!-- Resume Preview Section -->
+  <section class="resume-preview" style="padding: 4rem 0;">
+    <div class="container">
+      <div class="pcb-surface" style="max-width: 900px; margin: 0 auto;">
+        <h2 class="font-mono text-trace" style="margin-bottom: 2rem; text-align: center;">
+          <span class="text-gold">$</span> Resume Preview
+        </h2>
+        
+        <!-- PDF Embed Container -->
+        <div class="pdf-container" style="position: relative; width: 100%; height: 70vh; min-height: 600px; border: 1px solid var(--pcb-trace-dim); border-radius: 8px; overflow: hidden; background: var(--pcb-bg);">
+          <!-- Loading State -->
+          <div class="pdf-loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: var(--pcb-silk-dim);">
+            <div class="led led-green" style="margin-bottom: 1rem; animation: led-pulse 1s infinite;"></div>
+            <p class="font-mono">Loading resume...</p>
+          </div>
+          
+          <!-- PDF Embed -->
+          <embed
+            src={`${import.meta.env.BASE_URL}/resume/Jesus_Stiles_Resume.pdf#view=FitH&pagemode=none`}
+            type="application/pdf"
+            width="100%"
+            height="100%"
+            style="border: none;"
+            onload="document.querySelector('.pdf-loading').style.display = 'none';"
+          />
+          
+          <!-- Fallback for mobile/unsupported browsers -->
+          <div class="pdf-fallback" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--pcb-surface); display: none; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center;">
+            <div class="led led-red" style="margin-bottom: 1rem;"></div>
+            <h3 style="margin-bottom: 1rem; color: var(--pcb-silk);">PDF Preview Unavailable</h3>
+            <p class="text-dim" style="margin-bottom: 2rem; max-width: 400px;">
+              Your browser doesn't support embedded PDFs. Please download the resume to view it.
+            </p>
+            <a href={`${import.meta.env.BASE_URL}/resume/Jesus_Stiles_Resume.pdf`} class="btn btn-primary" target="_blank">
+              📄 Open PDF in New Tab
+            </a>
+          </div>
+        </div>
+        
+        <!-- Mobile-friendly alternative -->
+        <div class="mobile-notice" style="display: none; margin-top: 2rem; text-align: center; padding: 1.5rem; background: var(--pcb-surface-2); border-radius: 8px; border: 1px solid var(--pcb-trace-dim);">
+          <div class="led led-gold" style="margin-bottom: 1rem;"></div>
+          <h3 class="font-mono" style="margin-bottom: 1rem; color: var(--pcb-trace);">Better on Desktop</h3>
+          <p class="text-dim" style="margin-bottom: 1.5rem;">
+            For the best resume viewing experience, try opening this page on a desktop or laptop computer.
+          </p>
+          <a href={`${import.meta.env.BASE_URL}/resume/Jesus_Stiles_Resume.pdf`} class="btn btn-primary" target="_blank">
+            📄 View Full PDF
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="trace-line"></div>
+  
+  <!-- Professional Summary -->
+  <section class="professional-summary" style="padding: 4rem 0;">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;">
+        <h2 class="font-mono text-trace" style="margin-bottom: 2rem; text-align: center;">
+          <span class="text-gold">&lt;</span> Professional Summary <span class="text-gold">/&gt;</span>
+        </h2>
+        
+        <div class="readable-content" style="text-align: center;">
+          <p style="font-size: 1.125rem; line-height: 1.7; color: var(--pcb-silk-dim); margin-bottom: 2rem;">
+            Computer Engineering student with hands-on experience in FPGA development, embedded systems, 
+            and IoT solutions. Proven track record of delivering reliable hardware and software systems 
+            from prototype to production deployment.
+          </p>
+          
+          <!-- Key Highlights -->
+          <div style="display: grid; gap: 2rem; margin-top: 3rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+              <div class="pcb-surface" style="padding: 2rem; text-align: center;">
+                <div class="led led-green" style="margin-bottom: 1rem;"></div>
+                <h3 class="font-mono text-trace">Hardware Design</h3>
+                <p class="text-dim" style="margin-top: 0.5rem;">FPGA, PCB Design, Embedded Systems</p>
+              </div>
+              
+              <div class="pcb-surface" style="padding: 2rem; text-align: center;">
+                <div class="led led-gold" style="margin-bottom: 1rem;"></div>
+                <h3 class="font-mono text-trace">Software Development</h3>
+                <p class="text-dim" style="margin-top: 0.5rem;">C/C++, Python, Web Technologies</p>
+              </div>
+              
+              <div class="pcb-surface" style="padding: 2rem; text-align: center;">
+                <div class="led led-green" style="margin-bottom: 1rem;"></div>
+                <h3 class="font-mono text-trace">IoT & Systems</h3>
+                <p class="text-dim" style="margin-top: 0.5rem;">ESP32, Wireless, Real-time Systems</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact CTA -->
+  <section class="contact-cta" style="padding: 5rem 0 3rem; border-top: 1px solid var(--pcb-trace-dim);">
+    <div class="container">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: 1.5rem; color: var(--pcb-silk);">Ready to Connect?</h2>
+        <p class="text-dim" style="margin-bottom: 2.5rem; font-size: 1.125rem; line-height: 1.7;">
+          I'm always interested in discussing new opportunities, projects, or collaborations 
+          in hardware engineering and embedded systems.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href={`${import.meta.env.BASE_URL}/contact`} class="btn btn-primary">
+            📧 Get In Touch
+          </a>
+          <a href={`${import.meta.env.BASE_URL}/projects`} class="btn">
+            🚀 View Projects
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Mobile-specific styles */
+  @media (max-width: 768px) {
+    .pdf-container {
+      display: none !important;
+    }
+    
+    .mobile-notice {
+      display: block !important;
+    }
+    
+    .resume-header h1 {
+      font-size: 2rem !important;
+    }
+    
+    .professional-summary {
+      padding: 2rem 0 !important;
+    }
+    
+    .quick-links {
+      flex-direction: column !important;
+      gap: 1rem !important;
+    }
+  }
+  
+  /* PDF loading animation */
+  @keyframes led-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  
+  /* Better spacing on smaller screens */
+  @media (max-width: 640px) {
+    .resume-header {
+      padding: 2rem 0 1rem !important;
+    }
+    
+    .container {
+      padding: 0 1rem !important;
+    }
+  }
+  
+  /* PDF embed error handling */
+  embed:invalid + .pdf-fallback {
+    display: flex !important;
+  }
+</style>
+
+<script>
+  // Check if PDF loaded successfully and show fallback if needed
+  document.addEventListener('DOMContentLoaded', function() {
+    const embed = document.querySelector('embed');
+    const loading = document.querySelector('.pdf-loading');
+    const fallback = document.querySelector('.pdf-fallback');
+    
+    // Hide loading after attempt
+    setTimeout(() => {
+      if (loading) loading.style.display = 'none';
+    }, 3000);
+    
+    // Check for PDF load errors
+    embed?.addEventListener('error', () => {
+      if (fallback) fallback.style.display = 'flex';
+    });
+  });
+</script>

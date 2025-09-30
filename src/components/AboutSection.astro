@@ -1,0 +1,496 @@
+---
+interface Props {
+  title?: string;
+  mainContent: {
+    intro: string;
+    community: string; 
+    personal: string;
+  };
+  quickFacts: {
+    languages: string;
+    interests: string;
+    community: string;
+    background: string;
+    atHome: string;
+  };
+  currently: string[];
+  lookingAhead: string[];
+  personalGallery?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  }[];
+}
+
+const { 
+  title = "About", 
+  mainContent,
+  quickFacts,
+  currently,
+  lookingAhead,
+  personalGallery
+} = Astro.props;
+---
+
+<section class="about-section" aria-labelledby="about-heading">
+  <div class="about-container">
+    <!-- Main Content -->
+    <div class="main-content">
+      <h2 id="about-heading" class="about-title">{title}</h2>
+      
+      <!-- Story Paragraphs -->
+      <div class="story-content">
+        <p class="story-paragraph">{mainContent.intro}</p>
+        <p class="story-paragraph">{mainContent.community}</p>
+        <p class="story-paragraph">{mainContent.personal}</p>
+      </div>
+      
+      <!-- Status Blocks -->
+      <div class="status-blocks">
+        <div class="status-block currently">
+          <h3 class="status-title">
+            <span class="led led-green"></span>
+            <span class="font-mono text-trace">Currently</span>
+          </h3>
+          <ul class="status-list">
+            {currently.map(item => <li>{item}</li>)}
+          </ul>
+        </div>
+        
+        <div class="status-block looking-ahead">
+          <h3 class="status-title">
+            <span class="led led-gold"></span>
+            <span class="font-mono text-gold">Looking Ahead</span>
+          </h3>
+          <ul class="status-list">
+            {lookingAhead.map(item => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Personal Gallery -->
+      {personalGallery && personalGallery.length > 0 && (
+        <div class="personal-gallery-main">
+          <h3 class="gallery-title font-mono">
+            <span class="text-gold">📸</span> Personal Moments
+          </h3>
+          
+          <div class="gallery-grid-main">
+            {personalGallery.map(photo => (
+              <figure class="gallery-item-main">
+                <img 
+                  src={`${import.meta.env.BASE_URL}${photo.src}`}
+                  alt={photo.alt}
+                  loading="lazy"
+                  decoding="async"
+                  class="gallery-photo-main"
+                />
+                {photo.caption && (
+                  <figcaption class="gallery-caption-main">
+                    {photo.caption}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Quick Facts -->
+      <div class="quick-facts">
+        <h3 class="sidebar-title font-mono">
+          <span class="text-trace">$</span> Quick Facts
+        </h3>
+        
+        <div class="fact-cards">
+          <div class="fact-card">
+            <dt class="fact-label">Languages</dt>
+            <dd class="fact-value">{quickFacts.languages}</dd>
+          </div>
+          
+          <div class="fact-card">
+            <dt class="fact-label">Interests</dt>
+            <dd class="fact-value">{quickFacts.interests}</dd>
+          </div>
+          
+          <div class="fact-card">
+            <dt class="fact-label">Community</dt>
+            <dd class="fact-value">{quickFacts.community}</dd>
+          </div>
+          
+          <div class="fact-card">
+            <dt class="fact-label">Background</dt>
+            <dd class="fact-value">{quickFacts.background}</dd>
+          </div>
+          
+          <div class="fact-card">
+            <dt class="fact-label">At Home</dt>
+            <dd class="fact-value">{quickFacts.atHome}</dd>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Photos -->
+      <div class="about-photos">
+        <figure class="photo-figure">
+          <img 
+            src={`${import.meta.env.BASE_URL}/assets/electro.webp`}
+            alt="Jesús meeting ElectroBOOM at Open Sauce 2025"
+            width="400"
+            height="300"
+            loading="lazy"
+            decoding="async"
+            class="photo"
+          />
+          <figcaption class="photo-caption">
+            Meeting ElectroBOOM at Open Sauce 2025
+          </figcaption>
+        </figure>
+        
+        <figure class="photo-figure">
+          <img 
+            src={`${import.meta.env.BASE_URL}/assets/jake.webp`}
+            alt="Jesús with Jake from Linus Tech Tips at Open Sauce 2025"
+            width="400"
+            height="300"
+            loading="lazy"
+            decoding="async"
+            class="photo"
+          />
+          <figcaption class="photo-caption">
+            With Jake from LTT at Open Sauce 2025
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    --spacing-unit: 0.5rem;
+    padding: calc(var(--spacing-unit) * 12) 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-container {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 8);
+    padding: 0 calc(var(--spacing-unit) * 4);
+    align-items: start;
+  }
+
+  /* Main Content Area */
+  .main-content {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 6);
+  }
+
+  .about-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--pcb-silk);
+    margin: 0;
+  }
+
+  .story-content {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 4);
+    max-width: 70ch;
+  }
+
+  .story-paragraph {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--pcb-silk-dim);
+    margin: 0;
+  }
+
+  /* Status Blocks */
+  .status-blocks {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 4);
+    margin-top: calc(var(--spacing-unit) * 2);
+  }
+
+  .status-block {
+    background: var(--pcb-surface);
+    border: 1px solid var(--pcb-trace-dim);
+    border-radius: 8px;
+    padding: calc(var(--spacing-unit) * 4);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .status-block:hover {
+    border-color: var(--pcb-trace);
+    transform: translateY(-2px);
+  }
+
+  .status-title {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 2);
+    margin: 0 0 calc(var(--spacing-unit) * 3) 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .status-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: calc(var(--spacing-unit) * 1.5);
+  }
+
+  .status-list li {
+    position: relative;
+    padding-left: calc(var(--spacing-unit) * 3);
+    color: var(--pcb-silk-dim);
+    line-height: 1.6;
+  }
+
+  .status-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--pcb-trace);
+    font-weight: bold;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 8);
+  }
+
+  .sidebar-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 calc(var(--spacing-unit) * 4) 0;
+    color: var(--pcb-silk);
+  }
+
+  /* Quick Facts */
+  .fact-cards {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 3);
+  }
+
+  .fact-card {
+    background: var(--pcb-surface);
+    border: 1px solid var(--pcb-trace-dim);
+    border-radius: 6px;
+    padding: calc(var(--spacing-unit) * 3);
+    transition: all 0.2s ease;
+  }
+
+  .fact-card:hover {
+    border-color: var(--pcb-trace);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 217, 255, 0.1);
+  }
+
+  .fact-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--pcb-trace);
+    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
+  }
+
+  .fact-value {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--pcb-silk-dim);
+    margin: 0;
+  }
+
+  /* Photos */
+  .about-photos {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 4);
+    justify-items: center;
+  }
+
+  .photo-figure {
+    margin: 0;
+    display: grid;
+    gap: calc(var(--spacing-unit) * 2);
+    justify-items: center;
+  }
+
+  .photo {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid var(--pcb-trace-dim);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .photo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .photo-caption {
+    font-size: 0.75rem;
+    color: var(--pcb-silk-dim);
+    text-align: center;
+    font-style: italic;
+    font-family: var(--font-mono);
+  }
+
+  /* Personal Gallery - Main Content */
+  .personal-gallery-main {
+    margin-top: calc(var(--spacing-unit) * 8);
+    padding-top: calc(var(--spacing-unit) * 6);
+    border-top: 1px solid var(--pcb-trace-dim);
+  }
+
+  .gallery-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 calc(var(--spacing-unit) * 6) 0;
+    color: var(--pcb-silk);
+  }
+
+  .gallery-grid-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: calc(var(--spacing-unit) * 6);
+  }
+
+  .gallery-item-main {
+    margin: 0;
+    display: grid;
+    gap: calc(var(--spacing-unit) * 3);
+    justify-items: center;
+    background: var(--pcb-surface);
+    border: 1px solid var(--pcb-trace-dim);
+    border-radius: 12px;
+    padding: calc(var(--spacing-unit) * 4);
+    transition: all 0.3s ease;
+  }
+
+  .gallery-item-main:hover {
+    transform: translateY(-4px);
+    border-color: var(--pcb-trace);
+    box-shadow: 0 8px 25px rgba(0, 217, 255, 0.15);
+  }
+
+  .gallery-photo-main {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid var(--pcb-trace-dim);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .gallery-photo-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .gallery-caption-main {
+    font-size: 0.875rem;
+    color: var(--pcb-silk-dim);
+    text-align: center;
+    font-family: var(--font-mono);
+    line-height: 1.4;
+    max-width: 280px;
+  }
+
+  /* Desktop Layout */
+  @media (min-width: 64rem) {
+    .about-container {
+      grid-template-columns: 1fr 320px;
+      gap: calc(var(--spacing-unit) * 12);
+    }
+
+    .status-blocks {
+      grid-template-columns: 1fr 1fr;
+      gap: calc(var(--spacing-unit) * 4);
+    }
+    
+    .photo {
+      max-width: 100%;
+    }
+
+    .gallery-grid-main {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: calc(var(--spacing-unit) * 8);
+    }
+  }
+
+  /* Tablet Layout */
+  @media (min-width: 48rem) and (max-width: 63.9rem) {
+    .status-blocks {
+      grid-template-columns: 1fr 1fr;
+      gap: calc(var(--spacing-unit) * 4);
+    }
+
+    .gallery-grid-main {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: calc(var(--spacing-unit) * 4);
+    }
+
+    .gallery-photo-main {
+      max-width: 300px;
+    }
+  }
+
+  /* Mobile Layout */
+  @media (max-width: 48rem) {
+    .about-section {
+      padding: calc(var(--spacing-unit) * 8) 0;
+    }
+
+    .about-container {
+      padding: 0 calc(var(--spacing-unit) * 3);
+      gap: calc(var(--spacing-unit) * 6);
+    }
+
+    .about-title {
+      font-size: 1.875rem;
+    }
+
+    .story-paragraph {
+      font-size: 1rem;
+    }
+
+    .photo {
+      max-width: 280px;
+    }
+
+    .gallery-title {
+      font-size: 1.25rem;
+    }
+
+    .gallery-grid-main {
+      grid-template-columns: 1fr;
+      gap: calc(var(--spacing-unit) * 4);
+    }
+
+    .gallery-photo-main {
+      max-width: 320px;
+    }
+
+    .personal-gallery-main {
+      margin-top: calc(var(--spacing-unit) * 6);
+      padding-top: calc(var(--spacing-unit) * 4);
+    }
+  }
+</style>

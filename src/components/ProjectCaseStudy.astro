@@ -1,0 +1,214 @@
+---
+import TagPill from './TagPill.astro';
+
+interface Props {
+  title: string;
+  tags: string[];
+  problem: string;
+  approach: string[];
+  results: string[];
+  ctaHref?: string;
+  ctaLabel?: string;
+  moreDetails?: string;
+}
+
+const { title, tags, problem, approach, results, ctaHref, ctaLabel, moreDetails } = Astro.props;
+---
+
+<section class="project-case-study" role="article">
+  <div class="case-study-container">
+    <!-- Header -->
+    <header class="case-study-header">
+      <h2 class="case-study-title">{title}</h2>
+      <div class="tag-list" role="list">
+        {tags.map(tag => <TagPill text={tag} />)}
+      </div>
+    </header>
+
+    <!-- Content Grid -->
+    <div class="case-study-content">
+      <!-- Problem Section -->
+      <div class="content-section">
+        <h3 class="section-heading">Problem</h3>
+        <div class="section-narrative">
+          <p>{problem}</p>
+        </div>
+      </div>
+
+      <!-- Technical Approach -->
+      <div class="content-section">
+        <h3 class="section-heading">Technical Approach</h3>
+        <div class="section-bullets">
+          <ul role="list">
+            {approach.map(item => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="content-section">
+        <h3 class="section-heading">Results</h3>
+        <div class="section-bullets">
+          <ul role="list">
+            {results.map(item => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Optional More Details -->
+      {moreDetails && (
+        <details class="more-details">
+          <summary class="details-toggle">More Technical Details</summary>
+          <div class="details-content">
+            <p>{moreDetails}</p>
+          </div>
+        </details>
+      )}
+
+      <!-- CTA -->
+      {ctaHref && ctaLabel && (
+        <div class="case-study-cta">
+          <a href={ctaHref} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            {ctaLabel} →
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .project-case-study {
+    --spacing-unit: 0.5rem;
+    max-width: 75ch;
+    margin: 0 auto;
+    padding: calc(var(--spacing-unit) * 6) calc(var(--spacing-unit) * 4);
+  }
+
+  .case-study-container {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 6);
+  }
+
+  .case-study-header {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 3);
+  }
+
+  .case-study-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--pcb-silk);
+    margin: 0;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-unit) * 2);
+  }
+
+  .case-study-content {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 8);
+  }
+
+  .content-section {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 3);
+  }
+
+  .section-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--pcb-trace);
+    margin: 0;
+    padding-bottom: calc(var(--spacing-unit) * 1);
+    border-bottom: 1px solid var(--pcb-trace-dim);
+  }
+
+  .section-narrative p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--pcb-silk-dim);
+    margin: 0;
+    max-width: 70ch;
+  }
+
+  .section-bullets ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: calc(var(--spacing-unit) * 1.5);
+  }
+
+  .section-bullets li {
+    position: relative;
+    padding-left: calc(var(--spacing-unit) * 4);
+    line-height: 1.6;
+    color: var(--pcb-silk-dim);
+  }
+
+  .section-bullets li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--pcb-gold);
+    font-weight: bold;
+  }
+
+  .more-details {
+    margin-top: calc(var(--spacing-unit) * 4);
+    border: 1px solid var(--pcb-trace-dim);
+    border-radius: 8px;
+    background: var(--pcb-surface);
+  }
+
+  .details-toggle {
+    padding: calc(var(--spacing-unit) * 3);
+    font-weight: 500;
+    color: var(--pcb-trace);
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease;
+  }
+
+  .details-toggle:hover {
+    color: var(--pcb-gold);
+  }
+
+  .details-content {
+    padding: 0 calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 3);
+    border-top: 1px solid var(--pcb-trace-dim);
+    color: var(--pcb-silk-dim);
+    line-height: 1.6;
+  }
+
+  .case-study-cta {
+    margin-top: calc(var(--spacing-unit) * 6);
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Responsive Grid */
+  @media (min-width: 64rem) {
+    .case-study-content {
+      grid-template-columns: 1fr 1fr;
+      gap: calc(var(--spacing-unit) * 6) calc(var(--spacing-unit) * 8);
+      align-items: start;
+    }
+
+    .content-section:first-child {
+      grid-column: 1 / -1;
+    }
+
+    .more-details,
+    .case-study-cta {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

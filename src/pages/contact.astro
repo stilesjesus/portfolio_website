@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+---
+
+<BaseLayout title="Contact - Jesús Stiles" description="Get in touch with Jesús Stiles for embedded/web collaborations, internships, and maker event opportunities.">
+  <!-- Contact Hero Section -->
+  <section class="contact-hero" style="padding: 4rem 0 2rem;">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <!-- Status Indicator -->
+        <p class="font-mono text-trace" style="font-size: 0.875rem; margin-bottom: 1rem;">
+          <span class="led led-green"></span>
+          STATUS: AVAILABLE FOR COLLABORATION
+        </p>
+        
+        <h1>Let's <span class="text-gold">Connect</span></h1>
+        <p class="text-dim" style="font-size: 1.125rem; max-width: 600px; margin: 0 auto 3rem;">
+          Ready to collaborate on innovative projects, discuss internship opportunities, or showcase builds at maker events.
+        </p>
+        
+        <!-- Quick Contact Stats -->
+        <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem;">
+          <div class="stat-item">
+            <span class="led led-green"></span>
+            <span class="font-mono text-dim">48hr Response Time</span>
+          </div>
+          <div class="stat-item">
+            <span class="led led-gold"></span>
+            <span class="font-mono text-dim">Open to Collaborations</span>
+          </div>
+          <div class="stat-item">
+            <span class="led led-green"></span>
+            <span class="font-mono text-dim">Internship Ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="trace-line"></div>
+  
+  <!-- Contact Information Section -->
+  <section class="contact-info" style="padding: 4rem 0;">
+    <div class="container">
+      <div style="max-width: 1000px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-bottom: 4rem;">
+          
+          <!-- Primary Contact -->
+          <div class="pcb-surface">
+            <h3 style="margin-bottom: 1.5rem;">
+              <span class="led led-green"></span>
+              <span class="font-mono">Primary Contact</span>
+            </h3>
+            <div style="margin-bottom: 2rem;">
+              <h4 style="color: var(--pcb-trace); margin-bottom: 0.5rem;">Email (Preferred)</h4>
+              <a href="mailto:jesus@stiles.engineer" class="text-gold font-mono" style="font-size: 1.125rem; text-decoration: none;">
+                jesus@stiles.engineer
+              </a>
+              <p class="text-dim" style="font-size: 0.875rem; margin-top: 0.5rem;">
+                📧 I usually reply within 48 hours
+              </p>
+            </div>
+          </div>
+          
+          <!-- Collaboration Types -->
+          <div class="pcb-surface">
+            <h3 style="margin-bottom: 1.5rem;">
+              <span class="led led-gold"></span>
+              <span class="font-mono">Open For</span>
+            </h3>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="margin-bottom: 1rem; display: flex; align-items: center;">
+                <span class="led led-green" style="margin-right: 1rem;"></span>
+                <span><strong>Embedded/Web Collaborations</strong><br>
+                <span class="text-dim font-mono" style="font-size: 0.875rem;">ESP32, FPGA, IoT projects</span></span>
+              </li>
+              <li style="margin-bottom: 1rem; display: flex; align-items: center;">
+                <span class="led led-gold" style="margin-right: 1rem;"></span>
+                <span><strong>Internship Opportunities</strong><br>
+                <span class="text-dim font-mono" style="font-size: 0.875rem;">Hardware/software engineering roles</span></span>
+              </li>
+              <li style="margin-bottom: 1rem; display: flex; align-items: center;">
+                <span class="led led-green" style="margin-right: 1rem;"></span>
+                <span><strong>Maker Event Showcases</strong><br>
+                <span class="text-dim font-mono" style="font-size: 0.875rem;">Open Sauce, conferences, demos</span></span>
+              </li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="trace-line"></div>
+  
+  <!-- Social & Professional Links -->
+  <section class="social-links" style="padding: 4rem 0;">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <h2 style="margin-bottom: 3rem;">Connect on <span class="text-trace">Professional Platforms</span></h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+          
+          <!-- GitHub -->
+          <div class="pcb-surface" style="text-align: center; padding: 2rem;">
+            <div class="led led-green" style="margin-bottom: 1rem;"></div>
+            <h4 style="margin-bottom: 1rem;">GitHub</h4>
+            <p class="text-dim" style="margin-bottom: 1rem;">View my latest projects and contributions</p>
+            <a href="https://github.com/stilesjesus" class="btn" target="_blank" rel="noopener">
+              View Profile →
+            </a>
+          </div>
+          
+          <!-- LinkedIn -->
+          <div class="pcb-surface" style="text-align: center; padding: 2rem;">
+            <div class="led led-gold" style="margin-bottom: 1rem;"></div>
+            <h4 style="margin-bottom: 1rem;">LinkedIn</h4>
+            <p class="text-dim" style="margin-bottom: 1rem;">Professional background and experience</p>
+            <a href="https://linkedin.com/in/jesus-stiles" class="btn" target="_blank" rel="noopener">
+              Connect →
+            </a>
+          </div>
+          
+          <!-- YouTube -->
+          <div class="pcb-surface" style="text-align: center; padding: 2rem;">
+            <div class="led led-green" style="margin-bottom: 1rem;"></div>
+            <h4 style="margin-bottom: 1rem;">YouTube</h4>
+            <p class="text-dim" style="margin-bottom: 1rem;">Build videos and technical content</p>
+            <a href="https://www.youtube.com/channel/UC_551T0vLUne3VEc0FG9jhQ" class="btn" target="_blank" rel="noopener">
+              Subscribe →
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="trace-line"></div>
+  
+  <!-- Call to Action -->
+  <ContactCTA />
+  
+  <style>
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .contact-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    @media (max-width: 48rem) {
+      .contact-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .stat-item {
+        font-size: 0.875rem;
+      }
+    }
+  </style>
+</BaseLayout>

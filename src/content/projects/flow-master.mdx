@@ -1,0 +1,116 @@
+---
+title: "Flow Master — Interactive Logic Gate Learning Game"
+description: "Interactive logic-gate learning game with double-buffered simulation, progressive levels (gates to puzzles to sequential circuits), and automated tests"
+date: 2025-09-15
+status: "active"
+featured: false
+category: "software"
+
+tech: ["JavaScript", "HTML5 Canvas", "Vitest"]
+tools: ["VS Code", "Git", "Chrome DevTools"]
+
+github: "https://github.com/stilesjesus/logic_gates"
+demo: "https://stilesjesus.github.io/logic_gates/"
+
+image: "/assets/projects/flow-master/game-screenshot.png"
+
+duration: "6 weeks"
+team: ["Solo"]
+role: "Developer & Designer"
+
+impact: "Created an interactive learning platform that makes digital logic concepts accessible through hands-on gameplay"
+lessons:
+  - "Double buffering prevents visual glitches in real-time simulations"
+  - "Progressive difficulty curves keep learners engaged without overwhelming them"
+  - "Automated test verification provides instant feedback without manual grading"
+---
+
+## The Problem
+
+Learning digital logic gates is traditionally done through static diagrams and truth tables. This approach lacks interactivity and fails to convey the dynamic nature of logic circuits. Students struggle to visualize how signals propagate through gates in real-time.
+
+## Technical Approach
+
+Built a browser-based game engine that simulates digital logic in real-time:
+
+### 1. Simulation Engine
+- **Double-buffered state management** prevents race conditions
+- **Event-driven propagation** for accurate signal timing
+- **Cycle-accurate simulation** matching real hardware behavior
+- **Collision detection** for wire placement validation
+
+### 2. Progressive Learning System
+The game introduces concepts incrementally:
+1. **Basic Gates**: AND, OR, NOT gates with simple objectives
+2. **Complex Gates**: XOR, NAND, NOR with multi-gate puzzles
+3. **Combinational Logic**: Adders, multiplexers, comparators
+4. **Sequential Circuits**: Flip-flops, registers, state machines
+
+### 3. Automated Verification
+Each level includes test cases that automatically verify correctness:
+```javascript
+// Test all input combinations
+for (let inputs of testVectors) {
+  circuit.setInputs(inputs);
+  circuit.simulate();
+  if (circuit.getOutputs() !== expectedOutputs[inputs]) {
+    return { passed: false, failedCase: inputs };
+  }
+}
+return { passed: true };
+```
+
+### 4. Canvas-Based Rendering
+- Hardware-accelerated HTML5 Canvas for smooth 60fps rendering
+- Custom wire routing algorithm for clean circuit layouts
+- Color-coded signals (red = HIGH, blue = LOW) for visual clarity
+
+## Features
+
+✅ **15+ Interactive Levels** with increasing complexity
+✅ **7 Logic Gate Types** (AND, OR, NOT, XOR, NAND, NOR, XNOR)
+✅ **Real-time Simulation** with instant visual feedback
+✅ **Automated Testing** validates solutions against test cases
+✅ **Hint System** provides guidance without giving away solutions
+✅ **Progress Tracking** saves completed levels locally
+✅ **Responsive Design** works on desktop and tablet
+
+## Technical Challenges
+
+### Double Buffering
+Initial implementation had race conditions where gate outputs would update mid-cycle, causing incorrect results. Solution: maintain current and next state buffers, only swapping after all gates compute:
+
+```javascript
+class Circuit {
+  simulate() {
+    // Compute next state without modifying current
+    for (let gate of this.gates) {
+      gate.computeNext(this.currentState);
+    }
+
+    // Atomic swap after all computations complete
+    this.currentState = this.nextState.clone();
+  }
+}
+```
+
+### Wire Routing
+Needed an algorithm to draw clean wire paths between gates. Implemented A* pathfinding with Manhattan distance heuristic, avoiding overlapping components.
+
+### Performance Optimization
+Canvas redraws were causing lag on complex circuits. Added dirty region tracking to only redraw changed areas, improving performance by 5x.
+
+## What's Next?
+
+Currently implementing:
+- Multiplayer puzzle challenges
+- Custom level editor
+- Achievement system
+- Mobile touch controls
+- Tutorial videos for advanced concepts
+
+## Try It Yourself
+
+Play the game: [Flow Master Live Demo](https://stilesjesus.github.io/logic_gates/)
+
+View the code: [GitHub Repository](https://github.com/stilesjesus/logic_gates)

@@ -1,0 +1,204 @@
+---
+title: "Bathroom Fan Humidity Automation"
+description: "Automated bathroom exhaust fan using a DHT22 humidity sensor and servo motor; turns on while humidity is high and off when levels normalize"
+date: 2025-08-01
+status: "complete"
+featured: false
+category: "embedded"
+
+tech: ["Arduino", "C++", "Servo", "DHT22 Sensor"]
+tools: ["Arduino IDE", "Multimeter", "3D Printer"]
+
+video: "https://youtu.be/17Ug6e_c-rI?si=VkQA4kFGTLOabj4w"
+
+image: "/assets/projects/bathroom-fan/fan-mounted.jpg"
+
+duration: "1 week"
+team: ["Solo"]
+role: "Hardware Engineer"
+
+impact: "Automated humidity control prevents mold growth and eliminates the need for manual fan operation"
+lessons:
+  - "The DHT22 sensor provides reliable ±2% humidity accuracy for environmental monitoring"
+  - "Servo positioning requires calibration for mechanical switches to ensure reliable actuation"
+  - "Hysteresis prevents oscillation when humidity hovers near the threshold"
+---
+
+## The Problem
+
+Bathroom exhaust fans are often forgotten, leading to excessive humidity that causes mold growth and paint damage. Manual operation is inconvenient, and leaving the fan running wastes energy. A smart solution was needed to automate fan control based on real-time humidity levels.
+
+## Hardware Components
+
+### Core System
+- **Arduino Uno**: Main microcontroller for logic and control
+- **DHT22 Temperature & Humidity Sensor**: Measures ambient humidity with ±2% accuracy
+- **Standard Servo Motor**: Mechanically actuates the fan switch
+- **5V Power Supply**: Powers the Arduino and servo
+
+### Why DHT22?
+
+The DHT22 (also known as AM2302) was chosen for several key advantages:
+- **±2% humidity accuracy** vs ±5% for the cheaper DHT11
+- **0-100% humidity range** covers all conditions
+- **-40°C to 80°C temperature range** handles bathroom temperature swings
+- **Simple digital interface** requires only one GPIO pin
+- **Low cost** (~$5) makes it accessible for DIY projects
+
+## Technical Approach
+
+### 1. Humidity Monitoring
+The DHT22 sensor provides both temperature and humidity readings:
+
+```cpp
+#include <DHT.h>
+
+#define DHTPIN 2
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
+
+void loop() {
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
+
+  if (isnan(humidity) || isnan(temperature)) {
+    Serial.println("Sensor read error!");
+    return;
+  }
+
+  controlFan(humidity);
+  delay(2000); // DHT22 requires 2s between reads
+}
+```
+
+### 2. Hysteresis Control
+To prevent the fan from rapidly cycling on and off when humidity hovers near the threshold, I implemented hysteresis:
+
+```cpp
+#define HUMIDITY_HIGH 70  // Turn fan ON above 70%
+#define HUMIDITY_LOW 60   // Turn fan OFF below 60%
+
+bool fanRunning = false;
+
+void controlFan(float humidity) {
+  if (!fanRunning && humidity > HUMIDITY_HIGH) {
+    // Turn fan ON
+    servo.write(90);  // Press switch
+    fanRunning = true;
+    Serial.println("Fan activated");
+  }
+  else if (fanRunning && humidity < HUMIDITY_LOW) {
+    // Turn fan OFF
+    servo.write(0);   // Release switch
+    fanRunning = false;
+    Serial.println("Fan deactivated");
+  }
+}
+```
+
+This 10% hysteresis band prevents oscillation and reduces mechanical wear.
+
+### 3. Servo Calibration
+The servo physically presses the wall switch. Calibration was critical:
+
+1. **Position Testing**: Found optimal angles (0° = OFF, 90° = ON)
+2. **Mounting Bracket**: 3D-printed bracket holds servo aligned with switch
+3. **Travel Limits**: Limited servo rotation to prevent mechanical stress
+4. **Hold Time**: Brief 500ms actuation ensures reliable contact
+
+### 4. Error Handling
+Added robustness for sensor failures:
+
+```cpp
+int consecutiveErrors = 0;
+#define MAX_ERRORS 5
+
+void loop() {
+  float humidity = dht.readHumidity();
+
+  if (isnan(humidity)) {
+    consecutiveErrors++;
+    if (consecutiveErrors >= MAX_ERRORS) {
+      // Safe mode: turn fan ON to prevent humidity buildup
+      servo.write(90);
+      Serial.println("Sensor failure - entering safe mode");
+    }
+    return;
+  }
+
+  consecutiveErrors = 0;  // Reset on successful read
+  controlFan(humidity);
+}
+```
+
+## System Operation
+
+### Normal Cycle
+1. **Baseline**: Humidity around 40-50% (fan OFF)
+2. **Shower Event**: Humidity rises above 70%
+3. **Fan Activation**: Servo presses switch, fan turns ON
+4. **Ventilation**: Fan runs until humidity drops below 60%
+5. **Fan Deactivation**: Servo releases switch, returns to idle
+
+### Real-World Performance
+- **Response Time**: Fan activates within 5 seconds of threshold breach
+- **Runtime**: Typically 10-15 minutes after shower completion
+- **Accuracy**: ±2% humidity measurement from DHT22
+- **Reliability**: Zero false activations over 3-month deployment
+- **Power Consumption**: Less than 1W when idle
+
+## Results
+
+✅ **Automated Operation**: No manual intervention required
+✅ **Energy Efficient**: Fan only runs when needed
+✅ **Mold Prevention**: Maintains humidity below 60%
+✅ **Simple Installation**: No electrical wiring modification
+✅ **Cost Effective**: Total build cost under $20
+
+## Video Demonstration
+
+Watch the system in action, including humidity sensor readings, servo actuation, and real-time fan control:
+
+<div class="video-container">
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/17Ug6e_c-rI?si=VkQA4kFGTLOabj4w"
+    title="Bathroom Fan Humidity Automation Demo"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
+
+## Future Enhancements
+
+Potential improvements for v2:
+- **WiFi Connectivity**: Remote monitoring via ESP32
+- **Data Logging**: Track humidity trends over time
+- **Smart Scheduling**: Learn typical shower times
+- **IFTTT Integration**: Trigger other smart home devices
+- **Battery Backup**: Maintain operation during power outages
+
+## Technical Resources
+
+### DHT22 Sensor Specifications
+- Humidity Range: 0-100% RH
+- Humidity Accuracy: ±2% RH
+- Temperature Range: -40°C to 80°C
+- Temperature Accuracy: ±0.5°C
+- Sampling Rate: 0.5 Hz (one reading every 2 seconds)
+- Operating Voltage: 3.3-6V DC
+- Signal Type: Single-wire digital
+
+### Key Libraries Used
+- **DHT Sensor Library** by Adafruit: For DHT22 communication
+- **Servo Library**: For servo motor control (Arduino standard library)
+
+## Lessons Learned
+
+1. **Sensor Selection Matters**: The DHT22's superior accuracy justified the slight cost increase over DHT11
+2. **Mechanical Reliability**: Servo calibration and proper mounting are critical for long-term operation
+3. **Hysteresis is Essential**: Prevents rapid cycling and extends component lifespan
+4. **Fail-Safe Design**: Safe mode activation prevents humidity damage during sensor failures
+5. **Testing Takes Time**: Real-world environmental testing revealed edge cases not apparent in bench testing

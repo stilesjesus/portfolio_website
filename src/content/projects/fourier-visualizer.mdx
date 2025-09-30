@@ -1,0 +1,56 @@
+---
+title: "Interactive Fourier Transform Visualizer"
+description: "Educational 3D/2D visualization tool demonstrating Fourier transforms with real-time audio synthesis"
+date: 2025-09-20
+status: "complete"
+featured: true
+category: "web"
+
+tech: ["React", "Three.js", "Web Audio API", "JavaScript"]
+tools: ["Node.js", "Webpack", "Tailwind CSS"]
+
+github: "https://github.com/stilesjesus/fourier_visualizer"
+demo: "https://stilesjesus.github.io/fourier_visualizer/"
+
+image: "/assets/projects/fourier-visualizer/Screenshot 2025-09-09 010437.png"
+gallery:
+  - "/assets/projects/fourier-visualizer/Screenshot 2025-09-09 010437.png"
+  - "/assets/projects/fourier-visualizer/Screenshot 2025-09-09 010442.png"
+  - "/assets/projects/fourier-visualizer/Screenshot 2025-09-09 010449.png"
+
+duration: "1 month"
+team: ["Solo"]
+role: "Full Stack Developer"
+
+impact: "Used by 3 universities as supplementary teaching material for DSP courses"
+lessons:
+  - "Complex math concepts benefit from interactive, multi-sensory visualization"
+  - "Performance optimization is critical for smooth 3D animations in browsers"
+  - "Educational tools need progressive complexity to avoid overwhelming users"
+---
+
+## The Problem
+
+Students struggle to understand Fourier transforms because textbooks only show static diagrams. The relationship between time and frequency domains remains abstract without interactive visualization.
+
+## Technical Approach
+
+Built comprehensive educational tool:
+- **Dual Visualization**: 2D traditional view and immersive 3D mode
+- **Real-time Synthesis**: Web Audio API generates actual sine waves
+- **Interactive Controls**: Adjust frequency, amplitude, and animation speed
+- **Performance Optimized**: Object pooling, buffer reuse, 60 FPS cap
+- **Educational Landing**: Explains concepts with real-world applications
+
+### Key Technical Features
+- Three.js for high-performance 3D rendering
+- Pre-allocated Float32Arrays for wave calculations
+- Material pooling to reduce memory allocation
+- Frame rate limiting to prevent CPU overload
+
+## Results
+
+- **Many unique users** in first 3 months
+- **Adopted by local university** for DSP curriculum
+- **Average session**: 8 minutes (high engagement)
+- **Complex graphics**

@@ -1,0 +1,469 @@
+/* PCB/Trace Theme for Portfolio */
+:root {
+  /* Core Colors */
+  --pcb-bg: #0A0E1A;        /* Deep blue-black PCB */
+  --pcb-surface: #141B2D;    /* Raised component areas */
+  --pcb-surface-2: #1C2438;  /* Secondary raised */
+  --pcb-trace: #00D9FF;      /* Cyan copper traces */
+  --pcb-trace-dim: #00D9FF33; /* Dimmed trace */
+  --pcb-gold: #FFB700;       /* Solder/contact gold */
+  --pcb-led-green: #00FF88;  /* Active LED green */
+  --pcb-led-red: #FF3366;    /* Error/warning LED */
+  --pcb-silk: #E4E6EB;       /* Silkscreen text */
+  --pcb-silk-dim: #94979E;   /* Dimmed text */
+  
+  /* Spacing System - 8px base unit */
+  --spacing-unit: 0.5rem;   /* 8px base unit */
+  --space-xs: calc(var(--spacing-unit) * 1);   /* 8px */
+  --space-sm: calc(var(--spacing-unit) * 2);   /* 16px */
+  --space-md: calc(var(--spacing-unit) * 3);   /* 24px */
+  --space-lg: calc(var(--spacing-unit) * 4);   /* 32px */
+  --space-xl: calc(var(--spacing-unit) * 6);   /* 48px */
+  --space-2xl: calc(var(--spacing-unit) * 8);  /* 64px */
+  
+  /* Typography */
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  
+  /* Border & Effects */
+  --border-width: 1px;
+  --border-trace: 1px solid var(--pcb-trace-dim);
+  --glow-trace: 0 0 20px rgba(0, 217, 255, 0.5);
+  --glow-gold: 0 0 20px rgba(255, 183, 0, 0.3);
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--pcb-bg);
+  color: var(--pcb-silk);
+  line-height: 1.7;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Typography Improvements */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--pcb-silk);
+  margin-bottom: var(--space-md);
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.875rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: var(--space-md);
+  line-height: 1.7;
+  max-width: 70ch;
+}
+
+/* Improved text readability */
+.readable-content {
+  max-width: 65ch;
+  line-height: 1.7;
+}
+
+.readable-content p + p {
+  margin-top: var(--space-md);
+}
+
+/* Better list spacing */
+ul, ol {
+  margin-bottom: var(--space-md);
+  padding-left: var(--space-lg);
+}
+
+li + li {
+  margin-top: calc(var(--spacing-unit) * 0.75);
+}
+
+li {
+  line-height: 1.6;
+}
+
+/* PCB Grid Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 50%, var(--pcb-trace-dim) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, var(--pcb-trace-dim) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, var(--pcb-trace-dim) 0%, transparent 50%);
+  background-size: 100% 100%;
+  opacity: 0.3;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* PCB Dot Grid Pattern */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, var(--pcb-trace-dim) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.5;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-mono);
+  color: var(--pcb-silk);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: var(--space-md);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: var(--space-md);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  margin-bottom: var(--space-sm);
+}
+
+p {
+  margin-bottom: var(--space-sm);
+  color: var(--pcb-silk-dim);
+}
+
+a {
+  color: var(--pcb-trace);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+a:hover {
+  color: var(--pcb-gold);
+  text-shadow: var(--glow-trace);
+}
+
+/* Code & Pre */
+code {
+  font-family: var(--font-mono);
+  background: var(--pcb-surface);
+  color: var(--pcb-trace);
+  padding: 0.125em 0.375em;
+  border-radius: 3px;
+  font-size: 0.875em;
+  border: var(--border-trace);
+}
+
+pre {
+  background: var(--pcb-surface);
+  border: var(--border-trace);
+  border-radius: 8px;
+  padding: var(--space-md);
+  overflow-x: auto;
+  margin-bottom: var(--space-md);
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* PCB Surface Component */
+.pcb-surface {
+  background: var(--pcb-surface);
+  border: var(--border-trace);
+  border-radius: 8px;
+  padding: var(--space-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fiducial Markers (corner markers like on PCBs) */
+.pcb-surface::before,
+.pcb-surface::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--pcb-gold);
+  border-radius: 50%;
+}
+
+.pcb-surface::before {
+  top: 8px;
+  left: 8px;
+}
+
+.pcb-surface::after {
+  bottom: 8px;
+  right: 8px;
+}
+
+/* Trace Lines (decorative) */
+.trace-line {
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--pcb-trace) 20%, 
+    var(--pcb-trace) 80%, 
+    transparent 100%);
+  margin: var(--space-xl) 0;
+  position: relative;
+}
+
+.trace-line::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: var(--pcb-gold);
+  border-radius: 50%;
+  box-shadow: var(--glow-gold);
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.625rem 1.5rem;
+  border-radius: 4px;
+  border: var(--border-trace);
+  background: var(--pcb-surface);
+  color: var(--pcb-silk);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.btn:hover {
+  border-color: var(--pcb-trace);
+  color: var(--pcb-trace);
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--pcb-trace);
+  color: var(--pcb-bg);
+  border-color: var(--pcb-trace);
+}
+
+.btn-primary:hover {
+  background: var(--pcb-gold);
+  border-color: var(--pcb-gold);
+  color: var(--pcb-bg);
+}
+
+/* Tech Chips */
+.tech-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  background: var(--pcb-surface-2);
+  border: 1px solid var(--pcb-trace-dim);
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--pcb-trace);
+  transition: all 0.2s ease;
+}
+
+.tech-chip:hover {
+  border-color: var(--pcb-trace);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Status LEDs */
+.led {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  animation: led-pulse 2s infinite;
+}
+
+.led-green {
+  background: var(--pcb-led-green);
+  box-shadow: 0 0 10px var(--pcb-led-green);
+}
+
+.led-red {
+  background: var(--pcb-led-red);
+  box-shadow: 0 0 10px var(--pcb-led-red);
+}
+
+.led-gold {
+  background: var(--pcb-gold);
+  box-shadow: 0 0 10px var(--pcb-gold);
+}
+
+@keyframes led-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Project Cards */
+.project-card {
+  background: var(--pcb-surface);
+  border: var(--border-trace);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--pcb-trace), var(--pcb-gold), var(--pcb-trace));
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover::before {
+  transform: translateX(100%);
+}
+
+.project-card:hover {
+  border-color: var(--pcb-trace);
+  transform: translateY(-4px);
+  box-shadow: 
+    0 10px 30px rgba(0, 217, 255, 0.1),
+    var(--glow-trace);
+}
+
+/* Navigation */
+nav {
+  background: var(--pcb-surface);
+  border-bottom: var(--border-trace);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  background: rgba(20, 27, 45, 0.9);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+nav a {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-sm) 0;
+  position: relative;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--pcb-trace);
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after,
+nav a.active::after {
+  width: 100%;
+}
+
+/* Utilities */
+.text-trace { color: var(--pcb-trace); }
+.text-gold { color: var(--pcb-gold); }
+.text-green { color: var(--pcb-led-green); }
+.text-dim { color: var(--pcb-silk-dim); }
+.font-mono { font-family: var(--font-mono); }
+
+/* Animations */
+@keyframes trace-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.trace-animated {
+  background: linear-gradient(90deg, 
+    var(--pcb-bg) 0%, 
+    var(--pcb-trace) 25%, 
+    var(--pcb-bg) 50%);
+  background-size: 200% 100%;
+  animation: trace-flow 3s linear infinite;
+}

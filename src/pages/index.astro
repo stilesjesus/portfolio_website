@@ -1,249 +1,223 @@
 ---
-import { getCollection } from 'astro:content';
-// Component Imports
-import CallToAction from '../components/CallToAction.astro';
-// Page section components
-import ContactCTA from '../components/ContactCTA.astro';
-import Grid from '../components/Grid.astro';
-import Hero from '../components/Hero.astro';
-import Icon from '../components/Icon.astro';
-import Pill from '../components/Pill.astro';
-import PortfolioPreview from '../components/PortfolioPreview.astro';
-import Skills from '../components/Skills.astro';
-// Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Content Fetching: List four most recent work projects
-const projects = (await getCollection('work'))
-	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-	.slice(0, 4);
+// This will eventually come from your content collection
+const featuredProjects = [
+  {
+    title: "FPGA Mini-GPU with VGA Output",
+    description: "Custom 2D graphics pipeline on Artix-7 FPGA supporting 640×480 VGA with hardware-accelerated games",
+    tech: ["Verilog", "Python", "UART"],
+    status: "active",
+    link: `${import.meta.env.BASE_URL}/projects/fpga-gpu`,
+    github: "https://github.com/stilesjesus/fpga-gpu"
+  },
+  {
+    title: "Agricultural IoT Monitor",
+    description: "24/7 honey production monitoring with ESP32 mesh network achieving <0.1% packet loss",
+    tech: ["ESP32", "C++", "ESP-NOW"],
+    status: "complete",
+    link: `${import.meta.env.BASE_URL}/projects/honey-monitor`,
+    github: "https://github.com/stilesjesus/honey-monitor"
+  },
+  {
+    title: "Real-Time Potato Sensor",
+    description: "Environmental monitoring system preventing crop loss with <50ms response time",
+    tech: ["ESP32", "REST API", "IoT"],
+    status: "complete",
+    link: `${import.meta.env.BASE_URL}/projects/potato-sensor`,
+    github: "https://github.com/stilesjesus/potato-sensor-esp32"
+  }
+];
 
-// Full Astro Component Syntax:
-// https://docs.astro.build/basics/astro-components/
+const techStack = [
+  "Verilog", "VHDL", "C", "C++", "Python", "MATLAB",
+  "ESP32", "Arduino", "FPGA", "PCB Design",
+  "React", "TypeScript", "REST APIs", "IoT"
+];
 ---
 
-<BaseLayout>
-	<div class="stack gap-20 lg:gap-48">
-		<div class="wrapper stack gap-8 lg:gap-20">
-			<header class="hero">
-				<Hero
-					title="Hello, my name is Jeanine White"
-					tagline="I am a Creative Developer who is currently based in Portland, Oregon."
-					align="start"
-				>
-					<div class="roles">
-						<Pill><Icon icon="code" size="1.33em" /> Developer</Pill>
-						<Pill><Icon icon="microphone-stage" size="1.33em" /> Speaker</Pill>
-						<Pill><Icon icon="pencil-line" size="1.33em" /> Writer</Pill>
-					</div>
-				</Hero>
-
-				<img
-					alt="Jeanine White smiling in a red plaid shirt and tortoise shell glasses"
-					width="480"
-					height="620"
-					src="/assets/portrait.jpg"
-				/>
-			</header>
-
-			<Skills />
-		</div>
-
-		<main class="wrapper stack gap-20 lg:gap-48">
-			<section class="section with-background with-cta">
-				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Selected Work</h3>
-					<p>Take a look below at some of my featured work for clients from the past few years.</p>
-				</header>
-
-				<div class="gallery">
-					<Grid variant="offset">
-						{
-							projects.map((project) => (
-								<li>
-									<PortfolioPreview project={project} />
-								</li>
-							))
-						}
-					</Grid>
-				</div>
-
-				<div class="cta">
-					<CallToAction href="/work/">
-						View All
-						<Icon icon="arrow-right" size="1.2em" />
-					</CallToAction>
-				</div>
-			</section>
-
-			<section class="section with-background bg-variant">
-				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Mentions</h3>
-					<p>
-						I have been fortunate enough to receive praise for my work in several publications. Take
-						a look below to learn more.
-					</p>
-				</header>
-
-				<div class="gallery">
-					<Grid variant="small">
-						{
-							['Medium', 'BuzzFeed', 'The Next Web', 'awwwards.', 'TechCrunch'].map((brand) => (
-								<li class="mention-card">
-									<p>{brand}</p>
-								</li>
-							))
-						}
-					</Grid>
-				</div>
-			</section>
-		</main>
-
-		<ContactCTA />
-	</div>
+<BaseLayout title="Jesús Stiles - ECE Engineer & Hardware Developer">
+  <!-- Hero Section -->
+  <section class="hero" style="min-height: 80vh; display: flex; align-items: center; padding: 4rem 0;">
+    <div class="container">
+      <div style="max-width: 800px;">
+        <!-- Animated greeting -->
+        <p class="font-mono text-trace" style="font-size: 0.875rem; margin-bottom: 1rem;">
+          <span class="led led-green"></span>
+          SYSTEM.ONLINE
+        </p>
+        
+        <h1 style="margin-bottom: 1.5rem;">
+          Hi, I'm <span class="text-gold">Jesús Stiles</span>
+        </h1>
+        
+        <div class="typing-container" style="height: 2.5rem; margin-bottom: 2rem;">
+          <p class="font-mono" style="font-size: 1.25rem; color: var(--pcb-silk-dim);">
+            ECE Engineer building 
+            <span class="typing-text text-trace"></span>
+            <span class="cursor">|</span>
+          </p>
+        </div>
+        
+        <p style="font-size: 1.125rem; line-height: 1.7; margin-bottom: 2rem; max-width: 600px;">
+          Currently crafting a <span class="text-trace">GPU from scratch on FPGA</span>. 
+          Previously deployed <span class="text-gold">24/7 IoT systems</span> at Warcola Honey Farms.
+          Turning hardware concepts into working silicon and embedded solutions.
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem;">
+          <a href={`${import.meta.env.BASE_URL}/projects`} class="btn btn-primary">
+            View Projects →
+          </a>
+          <a href={`${import.meta.env.BASE_URL}/resume/Jesus_Stiles_Resume.pdf`} class="btn" download="Jesus_Stiles_Resume.pdf">
+            Download Resume ↓
+          </a>
+          <a href="https://github.com/stilesjesus" class="btn">
+            GitHub →
+          </a>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="stats-bar" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+          <div class="stat-item">
+            <span class="led led-gold"></span>
+            <span class="font-mono text-dim">NSBE Regional Winner</span>
+          </div>
+          <div class="stat-item">
+            <span class="led led-green"></span>
+            <span class="font-mono text-dim">Eagle Scout</span>
+          </div>
+          <div class="stat-item">
+            <span class="led led-green"></span>
+            <span class="font-mono text-dim">95% Resolution Rate @ Geek Squad</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="trace-line"></div>
+  
+  <!-- Featured Projects Section -->
+  <section class="projects" style="padding: 4rem 0;">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2>Featured <span class="text-gold">Projects</span></h2>
+        <p class="text-dim">Hardware and software solutions that solve real problems</p>
+      </div>
+      
+      <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+        {featuredProjects.map(project => (
+          <article class="project-card">
+            <div style="padding: 1.5rem;">
+              <!-- Project Status LED -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <span class="font-mono text-dim" style="font-size: 0.75rem; text-transform: uppercase;">
+                  <span class={`led led-${project.status === 'active' ? 'green' : 'gold'}`}></span>
+                  {project.status}
+                </span>
+                <a href={project.github} aria-label="View on GitHub">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                </a>
+              </div>
+              
+              <h3 style="margin-bottom: 1rem;">
+                <a href={project.link} style="color: var(--pcb-silk);">
+                  {project.title}
+                </a>
+              </h3>
+              
+              <p class="text-dim" style="margin-bottom: 1.5rem; font-size: 0.95rem;">
+                {project.description}
+              </p>
+              
+              <!-- Tech Stack -->
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                {project.tech.map(tech => (
+                  <span class="tech-chip">{tech}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+      
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href={`${import.meta.env.BASE_URL}/projects`} class="btn">
+          View All Projects →
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <div class="trace-line"></div>
+  
+  <!-- Tech Stack Section -->
+  <section class="tech-stack" style="padding: 4rem 0;">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2>Tech <span class="text-gold">Stack</span></h2>
+        <p class="text-dim">Languages, tools, and hardware I work with</p>
+      </div>
+      
+      <div class="tech-cloud" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; max-width: 800px; margin: 0 auto;">
+        {techStack.map(tech => (
+          <span class="tech-chip" style="font-size: 0.875rem;">
+            {tech}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <div class="trace-line"></div>
+  
+  <!-- Contact CTA Section -->
+  <section class="contact-cta" style="padding: 4rem 0; text-align: center;">
+    <div class="container">
+      <div class="pcb-surface" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: 1rem;">Let's <span class="text-gold">Build</span> Something</h2>
+        <p class="text-dim" style="margin-bottom: 2rem; line-height: 1.6;">
+          I'm open to embedded/web collabs, internships, and showcasing builds at maker events. The quickest way to reach me is email; I usually reply within 48 hours.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href={`${import.meta.env.BASE_URL}/contact`} class="btn btn-primary">
+            Get In Touch →
+          </a>
+          <a href="mailto:jesus@stiles.engineer" class="btn">
+            Email Directly →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <style>
+    /* Typing animation */
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    
+    .cursor {
+      display: inline-block;
+      animation: blink 1s infinite;
+      color: var(--pcb-trace);
+    }
+    
+    .typing-text::after {
+      content: 'FPGA graphics pipelines';
+      animation: typing 8s steps(30) infinite;
+    }
+    
+    @keyframes typing {
+      0%, 25% { content: 'FPGA graphics pipelines'; }
+      25%, 50% { content: 'embedded IoT systems'; }
+      50%, 75% { content: 'real-time monitoring'; }
+      75%, 100% { content: 'hardware solutions'; }
+    }
+  </style>
 </BaseLayout>
-
-<style>
-	.hero {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 2rem;
-	}
-
-	.roles {
-		display: none;
-	}
-
-	.hero img {
-		aspect-ratio: 5 / 4;
-		object-fit: cover;
-		object-position: top;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
-	}
-
-	@media (min-width: 50em) {
-		.hero {
-			display: grid;
-			grid-template-columns: 6fr 4fr;
-			padding-inline: 2.5rem;
-			gap: 3.75rem;
-		}
-
-		.roles {
-			margin-top: 0.5rem;
-			display: flex;
-			gap: 0.5rem;
-		}
-
-		.hero img {
-			aspect-ratio: 3 / 4;
-			border-radius: 4.5rem;
-			object-fit: cover;
-		}
-	}
-
-	/* ====================================================== */
-
-	.section {
-		display: grid;
-		gap: 2rem;
-	}
-
-	.with-background {
-		position: relative;
-	}
-
-	.with-background::before {
-		--hero-bg: var(--bg-image-subtle-2);
-
-		content: '';
-		position: absolute;
-		pointer-events: none;
-		left: 50%;
-		width: 100vw;
-		aspect-ratio: calc(2.25 / var(--bg-scale));
-		top: 0;
-		transform: translateY(-75%) translateX(-50%);
-		background:
-			url('/assets/backgrounds/noise.png') top center/220px repeat,
-			var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
-			var(--gray-999);
-		background-blend-mode: overlay, normal, normal, normal;
-		mix-blend-mode: var(--bg-blend-mode);
-		z-index: -1;
-	}
-
-	.with-background.bg-variant::before {
-		--hero-bg: var(--bg-image-subtle-1);
-	}
-
-	.section-header {
-		justify-self: center;
-		text-align: center;
-		max-width: 50ch;
-		font-size: var(--text-md);
-		color: var(--gray-300);
-	}
-
-	.section-header h3 {
-		font-size: var(--text-2xl);
-	}
-
-	@media (min-width: 50em) {
-		.section {
-			grid-template-columns: repeat(4, 1fr);
-			grid-template-areas: 'header header header header' 'gallery gallery gallery gallery';
-			gap: 5rem;
-		}
-
-		.section.with-cta {
-			grid-template-areas: 'header header header cta' 'gallery gallery gallery gallery';
-		}
-
-		.section-header {
-			grid-area: header;
-			font-size: var(--text-lg);
-		}
-
-		.section-header h3 {
-			font-size: var(--text-4xl);
-		}
-
-		.with-cta .section-header {
-			justify-self: flex-start;
-			text-align: left;
-		}
-
-		.gallery {
-			grid-area: gallery;
-		}
-
-		.cta {
-			grid-area: cta;
-		}
-	}
-
-	/* ====================================================== */
-
-	.mention-card {
-		display: flex;
-		height: 7rem;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		border: 1px solid var(--gray-800);
-		border-radius: 1.5rem;
-		color: var(--gray-300);
-		background: var(--gradient-subtle);
-		box-shadow: var(--shadow-sm);
-	}
-
-	@media (min-width: 50em) {
-		.mention-card {
-			border-radius: 1.5rem;
-			height: 9.5rem;
-		}
-	}
-</style>

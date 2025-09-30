@@ -1,0 +1,98 @@
+---
+title: "FPGA Mini-GPU with VGA Output"
+description: "Custom 2D graphics pipeline on Artix-7 FPGA supporting 640×480@60Hz VGA output with hardware-accelerated games"
+date: 2025-09-01
+status: "active"
+featured: true
+category: "hardware"
+comingSoon: true
+
+tech: ["Verilog", "Python", "UART", "FPGA"]
+tools: ["Vivado", "Artix-7", "Basys-3", "PySerial"]
+
+github: "https://github.com/stilesjesus/fpga-gpu"
+
+image: "/assets/projects/fpga-gpu/GPU_fan.JPG"
+gallery: 
+  - "/assets/projects/fpga-gpu/GPU_fan.JPG"
+  - "/assets/projects/fpga-gpu/GPU_planning.JPG"
+  - "/assets/projects/fpga-gpu/fan_cad.png"
+
+duration: "4 months"
+team: ["Solo"]
+role: "Hardware Engineer"
+
+impact: "Demonstrated real-time graphics performance with interactive games rendered entirely in FPGA hardware logic"
+lessons:
+  - "Timing closure is everything - spent 2 weeks debugging a 0.1% clock deviation"
+  - "BRAM organization dramatically affects performance"
+  - "Hardware debugging requires a completely different mindset than software"
+---
+
+## The Problem
+
+Modern GPUs are incredibly powerful but also black boxes. As an ECE student, I wanted to understand graphics at the hardware level. Could I build a functional GPU from scratch using just an FPGA?
+
+## Constraints
+
+Working with the Artix-7 FPGA meant dealing with:
+- Only 35K logic cells available
+- Limited to 225KB of Block RAM
+- Strict 60Hz timing requirements for VGA
+- No soft CPU - pure hardware implementation
+
+## Technical Approach
+
+### 1. Display Controller
+Implemented VGA timing generator with precise 25.175MHz pixel clock:
+```verilog
+always @(posedge clk_25mhz) begin
+    if (h_count < H_DISPLAY) 
+        vga_active <= (v_count < V_DISPLAY);
+    // Precise timing for 640x480@60Hz
+end
+```
+
+### 2. Graphics Pipeline Architecture
+- **Frame Buffer**: Dual-port BRAM with double buffering to prevent tearing
+- **Rasterizer**: Hardware implementation of Bresenham line algorithm
+- **Sprite Engine**: DMA-style sprite blitting with transparency
+- **Collision Detection**: Parallel boundary checking in hardware
+
+### 3. Host Communication
+Python toolchain for development and debugging:
+```python
+# Stream sprite data via UART
+def upload_sprite(serial_port, sprite_data):
+    header = struct.pack('>HH', width, height)
+    serial_port.write(header + sprite_data)
+```
+
+## Results & Performance
+
+✅ **640×480 @ 60Hz** stable VGA output  
+✅ **12-bit RGB** color depth (4096 colors)  
+✅ **2 Games Running**: Pong and Snake fully playable  
+✅ **Less than 50% LUT Usage**: Efficient resource utilization  
+✅ **Zero frame drops** with hardware double-buffering  
+
+
+## Key Learnings
+
+The biggest challenge was timing closure. The VGA specification requires exact timing - being off by even 0.1% causes display issues. I spent two weeks debugging why my display was shifted until I realized my pixel clock was 25.170MHz instead of 25.175MHz.
+
+Another surprise was how much BRAM organization matters. Switching from a linear frame buffer to a tile-based approach improved fill rate by 3x.
+
+## What's Next?
+
+Currently implementing:
+- 3D wireframe rendering
+- Texture mapping support  
+- HDMI output upgrade
+- Custom GPU instruction set
+
+## Resources
+
+- [GitHub Repository](https://github.com/stilesjesus/fpga-gpu)
+- [Build Video Series](https://youtube.com/playlist?v=YOUR_PLAYLIST)
+- [Technical Documentation](https://github.com/stilesjesus/fpga-gpu/wiki)

@@ -2,118 +2,59 @@
 import ContactCTA from '../components/ContactCTA.astro';
 import Hero from '../components/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AboutSection from '../components/AboutSection.astro';
+import ImageCarousel from '../components/ImageCarousel.astro';
 ---
 
-<BaseLayout title="About | Jeanine White" description="About Jeanine White Lorem Ipsum">
-	<div class="stack gap-20">
-		<main class="wrapper about">
-			<Hero
-				title="About"
-				tagline="Thanks for stopping by. Read below to learn more about myself and my background."
-			>
-				<img
-					width="1553"
-					height="873"
-					src="/assets/at-work.jpg"
-					alt="Jeanine White at work with a colleague"
-				/>
-			</Hero>
+<BaseLayout title="About | Jesús Stiles" description="About Jesús G. Stiles Amezcua - Computer Engineering Student">
+	<AboutSection
+		title="About Jesús"
+		mainContent={{
+			intro: "Hi! I'm Jesús G. Stiles Amezcua. I'm a rising computer engineering student who likes to learn by shipping: ESP32 IoT devices, small web/back-end services on AWS, and CAD designs that become 3D-printed parts. My goal is to make clear, reliable builds—then document them so others can follow along or improve them.",
+			community: "I'm deeply involved in the maker community. This year I attended Open Sauce and had the chance to meet ElectroBOOM, Jake from LTT, and William Osman. Experiences like that remind me why I build: sharing ideas, trying new tools, and helping newcomers feel welcome. I've also been active in service and leadership through Scouting (Eagle Scout) and I've attended the NSBE national convention to connect with engineers and mentors.",
+			personal: "A bit about me: I grew up around beekeeping (lots of engineering problems to solve there!), and I love the outdoors—camping, hiking, and fishing whenever I can. I spent part of my childhood in Mexico, have traveled around the U.S., and I'm curious about new cultures; a recent highlight was a trip to Tokyo. At home, life is lively with three dogs, six cats, fourteen chickens, and, of course, bees. What's next? I want to stay active in the engineering community, showcase a project at Open Sauce, and post more build videos on YouTube. I'm young, learning fast, and always excited to collaborate on useful tools, fun builds, or community projects. Let's connect."
+		}}
+		quickFacts={{
+			languages: "English, Spanish, a little Japanese",
+			interests: "Embedded systems, web/AWS, CAD/3D printing, documentation",
+			community: "Open Sauce attendee; NSBE national convention; Eagle Scout",
+			background: "Beekeeping family; outdoors (camping, hiking, fishing)",
+			atHome: "3 dogs, 6 cats, 14 chickens, lots of bees"
+		}}
+		currently={[
+			"Finishing core engineering classes and building portfolio projects",
+			"Prototyping ESP32 IoT devices and small web tools",
+			"Editing build logs and short videos for YouTube"
+		]}
+		lookingAhead={[
+			"Showcase a project at Open Sauce",
+			"Collaborate with other makers on open-source tools",
+			"Keep sharing practical guides for beginners"
+		]}
+		personalGallery={[
+			{
+				src: "/assets/about/fujipic.jpg",
+				alt: "Mount Fuji view during my trip to Japan",
+				caption: "Mount Fuji - Exploring Japanese engineering culture"
+			},
+			{
+				src: "/assets/about/gardenjp.jpg",
+				alt: "Traditional Japanese garden in Kyoto",
+				caption: "Traditional garden - Appreciating Japanese design principles"
+			},
+			{
+				src: "/assets/about/japanpic.jpg",
+				alt: "Street scene exploring Tokyo's tech districts",
+				caption: "I got to see the giant gundam robot in Tokyo"
+			},
+			{
+				src: "/assets/about/fishingpic.JPG",
+				alt: "Fishing trip showcasing outdoor problem-solving skills",
+				caption: "Outdoor adventures - Problem-solving in nature"
+			}
+		]}
+	/>
 
-			<section>
-				<h2 class="section-title">Background</h2>
-				<div class="content">
-					<p>
-						Lorem ipsum dolor sit amet, <a href="https://astro.build/">Astro</a> makes people happy.
-						Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin nibh nisl condimentum
-						id venenatis a condimentum vitae. Dapibus ultrices in iaculis nunc. Arcu odio ut sem nulla
-						pharetra diam sit amet. Diam quis enim lobortis scelerisque fermentum dui faucibus in ornare.
-					</p>
-					<p>
-						Arcu dui vivamus arcu felis bibendum ut tristique et egestas. Eget gravida cum sociis
-						natoque penatibus. Cras fermentum odio eu feugiat pretium nibh. Proin nibh nisl
-						condimentum id venenatis. Porta nibh venenatis cras sed felis eget velit. Id diam vel
-						quam elementum pulvinar etiam non.
-					</p>
-					<p>
-						Ultrices tincidunt arcu non sodales neque sodales ut. Sed enim ut sem viverra aliquet
-						eget sit amet. Lacus luctus accumsan tortor posuere ac ut consequat semper viverra.
-						Viverra accumsan in nisl nisi scelerisque eu ultrices. In massa tempor nec feugiat nisl
-						pretium fusce.
-					</p>
-				</div>
-			</section>
-			<section>
-				<h2 class="section-title">Education</h2>
-				<div class="content">
-					<p>Corporis voluptates tenetur laudantium.</p>
-				</div>
-			</section>
-			<section>
-				<h2 class="section-title">Skills</h2>
-				<div class="content">
-					<p>officia unde omnis</p>
-				</div>
-			</section>
-		</main>
-
-		<ContactCTA />
-	</div>
+	<ContactCTA />
 </BaseLayout>
 
-<style>
-	.about {
-		display: flex;
-		flex-direction: column;
-		gap: 3.5rem;
-	}
-
-	img {
-		margin-top: 1.5rem;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
-	}
-
-	section {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		color: var(--gray-200);
-	}
-
-	.section-title {
-		grid-column-start: 1;
-		font-size: var(--text-xl);
-		color: var(--gray-0);
-	}
-
-	.content {
-		grid-column: 2 / 4;
-	}
-
-	.content :global(a) {
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
-	}
-
-	.content :global(a:hover),
-	.content :global(a:focus) {
-		text-decoration-color: currentColor;
-	}
-
-	@media (min-width: 50em) {
-		.about {
-			display: grid;
-			grid-template-columns: 1fr 60% 1fr;
-		}
-
-		.about > :global(:first-child) {
-			grid-column-start: 2;
-		}
-
-		section {
-			display: contents;
-			font-size: var(--text-lg);
-		}
-	}
-</style>

@@ -1,30 +1,63 @@
-# Astro Starter Kit: Portfolio
+# Jesús Stiles - Engineering Portfolio
 
-```sh
-npm create astro@latest -- --template portfolio
+Professional portfolio website showcasing embedded systems, FPGA development, and IoT projects.
+
+🔗 **Contact:** jesus@stiles.engineer
+🐙 **GitHub:** [@stilesjesus](https://github.com/stilesjesus)
+💼 **LinkedIn:** [jesus-stiles](https://linkedin.com/in/jesus-stiles)
+📺 **YouTube:** [Technical Content Channel](https://www.youtube.com/channel/UC_551T0vLUne3VEc0FG9jhQ)
+
+## 🎯 Portfolio Highlights
+
+### Featured Projects
+- **FPGA Mini-GPU** - Custom 2D graphics pipeline on Artix-7 FPGA with VGA output
+- **24/7 Honey Production Monitoring** - ESP32 mesh network with <0.1% packet loss
+- **Industrial IoT Touch Display** - LVGL-based touchscreen interface with 93% cost reduction
+- **Flow Master** - Interactive logic gate learning game with automated verification
+- **Bathroom Fan Automation** - DHT22 humidity sensor with servo control
+
+### Technical Stack
+- **Hardware:** FPGA (Verilog), ESP32, Arduino, PCB Design
+- **Embedded:** C/C++, RTOS, ESP-NOW, MQTT
+- **Software:** JavaScript, Python, Web Development
+- **Tools:** Vivado, PlatformIO, Fusion 360, Git
+
+## 🚀 Development
+
+Built with [Astro](https://astro.build) and custom PCB-themed design.
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/portfolio)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/portfolio)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/portfolio/devcontainer.json)
+## 📁 Project Structure
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+```
+├── src/
+│   ├── content/projects/     # Project case studies (MDX)
+│   ├── pages/                # Route pages
+│   ├── components/           # Reusable components
+│   └── layouts/              # Page layouts
+├── public/
+│   ├── assets/projects/      # Project images
+│   └── resume/               # Resume PDF
+└── astro.config.mjs          # Astro configuration
+```
 
-![portfolio](https://user-images.githubusercontent.com/357379/210779178-a98f0fb7-6b1a-4068-894c-8e1403e26654.jpg)
+## 📝 License
 
-## 🧞 Commands
+This portfolio is © 2025 Jesús Stiles. All project content and images are owned by the author.
 
-All commands are run from the root of the project, from a terminal:
+---
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+💡 Open to collaborations, internships, and maker event showcases!

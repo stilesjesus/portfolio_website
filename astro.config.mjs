@@ -5,8 +5,7 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://stilesjesus.github.io', // Replace stilesjesus with your GitHub username
-  base: '/portfolio_website', // Your repo name (remove this line if using custom domain)
+  site: 'https://stiles.engineer', // Custom domain
   integrations: [
     mdx(),
     sitemap(),

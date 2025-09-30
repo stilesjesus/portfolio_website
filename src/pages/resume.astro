@@ -27,7 +27,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         
         <!-- Action Buttons -->
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem;">
-          <a href={`${import.meta.env.BASE_URL}/resume/Jesus_Stiles_Resume.pdf`} class="btn btn-primary" download="Jesus_Stiles_Resume.pdf">
+          <a href="/resume/Jesus_Stiles_Resume.pdf" class="btn btn-primary" download="Jesus_Stiles_Resume.pdf">
             📄 Download PDF
           </a>
           <a href="/contact" class="btn">
@@ -70,7 +70,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           
           <!-- PDF Embed -->
           <embed
-            src={`${import.meta.env.BASE_URL}/resume/Jesus_Stiles_Resume.pdf#view=FitH&pagemode=none`}
+            src="/resume/Jesus_Stiles_Resume.pdf#view=FitH&pagemode=none"
             type="application/pdf"
             width="100%"
             height="100%"
@@ -85,7 +85,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <p class="text-dim" style="margin-bottom: 2rem; max-width: 400px;">
               Your browser doesn't support embedded PDFs. Please download the resume to view it.
             </p>
-            <a href={`${import.meta.env.BASE_URL}/resume/Jesus_Stiles_Resume.pdf`} class="btn btn-primary" target="_blank">
+            <a href="/resume/Jesus_Stiles_Resume.pdf" class="btn btn-primary" target="_blank">
               📄 Open PDF in New Tab
             </a>
           </div>
@@ -98,7 +98,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="text-dim" style="margin-bottom: 1.5rem;">
             For the best resume viewing experience, try opening this page on a desktop or laptop computer.
           </p>
-          <a href={`${import.meta.env.BASE_URL}/resume/Jesus_Stiles_Resume.pdf`} class="btn btn-primary" target="_blank">
+          <a href="/resume/Jesus_Stiles_Resume.pdf" class="btn btn-primary" target="_blank">
             📄 View Full PDF
           </a>
         </div>

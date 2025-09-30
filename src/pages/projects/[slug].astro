@@ -32,9 +32,9 @@ const nextProject = projectIndex < allProjects.length - 1 ? allProjects[projectI
     <div class="container">
       <!-- Breadcrumb -->
       <nav class="breadcrumb" style="margin-bottom: 2rem;">
-        <a href={`${import.meta.env.BASE_URL}`} class="text-dim">Home</a>
+        <a href="/" class="text-dim">Home</a>
         <span class="text-dim" style="margin: 0 0.5rem;">/</span>
-        <a href={`${import.meta.env.BASE_URL}/projects`} class="text-dim">Projects</a>
+        <a href="/projects" class="text-dim">Projects</a>
         <span class="text-dim" style="margin: 0 0.5rem;">/</span>
         <span class="text-trace">{project.data.title}</span>
       </nav>
@@ -208,20 +208,20 @@ const nextProject = projectIndex < allProjects.length - 1 ? allProjects[projectI
     <div class="container">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
         {prevProject ? (
-          <a href={`${import.meta.env.BASE_URL}/projects/${prevProject.slug}`} class="nav-link" style="text-decoration: none;">
+          <a href={`/projects/${prevProject.slug}`} class="nav-link" style="text-decoration: none;">
             <span class="font-mono text-dim" style="font-size: 0.875rem;">← Previous</span>
             <p class="text-trace" style="margin: 0.5rem 0 0;">{prevProject.data.title}</p>
           </a>
         ) : (
           <div></div>
         )}
-        
-        <a href={`${import.meta.env.BASE_URL}/projects`} class="btn">
+
+        <a href="/projects" class="btn">
           All Projects
         </a>
-        
+
         {nextProject ? (
-          <a href={`${import.meta.env.BASE_URL}/projects/${nextProject.slug}`} class="nav-link" style="text-decoration: none; text-align: right;">
+          <a href={`/projects/${nextProject.slug}`} class="nav-link" style="text-decoration: none; text-align: right;">
             <span class="font-mono text-dim" style="font-size: 0.875rem;">Next →</span>
             <p class="text-trace" style="margin: 0.5rem 0 0;">{nextProject.data.title}</p>
           </a>

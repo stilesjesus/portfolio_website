@@ -78,7 +78,7 @@ const allTech = [...new Set(projects.flatMap(p => p.data.tech))].sort();
               
               <!-- Title -->
               <h3 style="margin-bottom: 1rem;">
-                <a href={`${import.meta.env.BASE_URL}/projects/${project.slug}`} style="color: var(--pcb-silk);">
+                <a href={`/projects/${project.slug}`} style="color: var(--pcb-silk);">
                   {project.data.title}
                 </a>
               </h3>
